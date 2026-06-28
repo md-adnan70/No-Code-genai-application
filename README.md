@@ -47,3 +47,7 @@ The capabilities of this real-time execution engine are demonstrated through a f
 
 ```text
 [Input Node] ➔ [Text Template] ➔ [API Node (GitHub GET)] ➔ [LLM Node (Groq)] ➔ [Output Node]
+```code
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
