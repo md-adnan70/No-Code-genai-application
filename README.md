@@ -47,7 +47,7 @@ The capabilities of this real-time execution engine are demonstrated through a f
 
 ```text
 [Input Node] ➔ [Text Template] ➔ [API Node (GitHub GET)] ➔ [LLM Node (Groq)] ➔ [Output Node]
-```
+
 Input & Templating: An Input Node feeds repository parameters into a dynamically resizing Text Node to construct the absolute endpoint URL (https://api.github.com/repos/{{owner}}/{{repo}}).
 
 Dynamic API Extraction: The API Node dynamically reads the template variables at runtime, triggers a live REST request to the GitHub API, and caches the raw JSON payload into the ExecutionContext.
