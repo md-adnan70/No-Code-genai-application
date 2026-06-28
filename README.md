@@ -47,7 +47,40 @@ The capabilities of this real-time execution engine are demonstrated through a f
 
 ```text
 [Input Node] ➔ [Text Template] ➔ [API Node (GitHub GET)] ➔ [LLM Node (Groq)] ➔ [Output Node]
-```code
+```
+Input & Templating: An Input Node feeds repository parameters into a dynamically resizing Text Node to construct the absolute endpoint URL (https://api.github.com/repos/{{owner}}/{{repo}}).
+
+Dynamic API Extraction: The API Node dynamically reads the template variables at runtime, triggers a live REST request to the GitHub API, and caches the raw JSON payload into the ExecutionContext.
+
+Streaming Inference: The JSON payload passes downstream into the LLM Node. The backend establishes a streaming connection to the Groq API, and raw tokens stream back to the UI via the active WebSocket connection to populate an intelligence report live.
+
+📂 Layered Codebase Architecture
+The backend code is cleanly split into three decoupled, independent packages to maximize testability and maintainability:
+```text
+Plaintext
+├── models/       # Pydantic data schemas for pipeline graphs, nodes, and edges
+├── workflow/     # Core graph-parsing, DAG validation, and cycle detection
+└── executors/    # Abstract executor base, registry, and individual node runtime logic
+```
+⚡ Quick Start
+1. Environment Configuration
+Create a .env file in your backend directory and supply your API key:
+
+Code snippet
+```text
+GROQ_API_KEY=your_groq_api_key_here
+```
+2. Spin up the Backend
+Bash
+```text
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
+```
+4. Spin up the Frontend
+Bash
+```text
+cd frontend
+npm install
+npm start
+```
